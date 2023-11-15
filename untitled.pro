@@ -12,16 +12,19 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    mydialog.cpp
+    mydialog.cpp \
+    tableshow.cpp
 
 HEADERS += \
     creatConnection.h \
     mainwindow.h \
-    mydialog.h
+    mydialog.h \
+    tableshow.h
 
 FORMS += \
     mainwindow.ui \
-    mydialog.ui
+    mydialog.ui \
+    tableshow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

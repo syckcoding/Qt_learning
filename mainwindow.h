@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "tableshow.h"
+
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -18,7 +20,10 @@ public:
 private slots:
     void on_pushButton_clicked();
 
+    void on_showButton_clicked();
+
 private:
     Ui::MainWindow *ui;
+    TableShow* t;
 };
 #endif // MAINWINDOW_H
