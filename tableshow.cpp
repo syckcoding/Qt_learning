@@ -68,3 +68,34 @@ void TableShow::on_pushButton_insert_clicked()
     showTable();
 }
 
+
+void TableShow::on_pushButton_delete_clicked()
+{
+    QSqlQuery sq(dbstu);
+    QString id = ui->lineEdit_id->text();
+    QString name = ui->lineEdit_name->text();
+    double score = ui->lineEdit_score->text().toDouble();
+
+    if(id == ""){
+        QMessageBox::critical(this,"失败","请输入学号",QMessageBox::Ok);
+        return;
+    }else if(name == ""){
+        QMessageBox::critical(this,"失败","请输入姓名",QMessageBox::Ok);
+        return;
+    }else if(score < 0 || score > 100){
+        QMessageBox::critical(this,"失败","请输入正确的成绩",QMessageBox::Ok);
+        return;
+    }
+
+    QString s = QString("Delete from studentscore where sid='%1' AND sname='%2' AND score=%3").arg(id).arg(name).arg(score);
+
+    if(sq.exec(s) == false){
+        QMessageBox::critical(this,"失败","删除数据失败",QMessageBox::Ok);
+        return;
+    }else{
+        QMessageBox::information(this,"成功","删除数据成功",QMessageBox::Ok);
+    }
+
+    showTable();
+}
+

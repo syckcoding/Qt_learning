@@ -20,6 +20,8 @@ private slots:
     void on_pushButton_insert_clicked();
     void showTable();
 
+    void on_pushButton_delete_clicked();
+
 private:
     Ui::TableShow *ui;
     QSqlDatabase dbstu;
