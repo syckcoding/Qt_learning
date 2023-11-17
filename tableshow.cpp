@@ -4,6 +4,7 @@
 
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
+#include <QMessageBox>
 
 TableShow::TableShow(QWidget *parent) :
     QDialog(parent),
@@ -12,9 +13,21 @@ TableShow::TableShow(QWidget *parent) :
     ui->setupUi(this);
 
     if(!creatConnection()){
+        QMessageBox::critical(0,"失败","You haven't open the database,please check again",QMessageBox::Ok);
         return ;
     }
-    QSqlDatabase dbstu = QSqlDatabase::database("Students");
+    QMessageBox::information(0,"成功","You open the database successfully!",QMessageBox::Ok);
+
+    showTable();
+}
+
+TableShow::~TableShow()
+{
+    delete ui;
+}
+
+void TableShow::showTable(){
+    dbstu = QSqlDatabase::database("Students");
     QSqlQueryModel *stu_view = new QSqlQueryModel(ui->sqlView);
     stu_view->setQuery("select * from studentscore");
 
@@ -25,7 +38,33 @@ TableShow::TableShow(QWidget *parent) :
     ui->sqlView->setModel(stu_view);
 }
 
-TableShow::~TableShow()
+void TableShow::on_pushButton_insert_clicked()
 {
-    delete ui;
+    QSqlQuery sq(dbstu);
+    QString id = ui->lineEdit_id->text();
+    QString name = ui->lineEdit_name->text();
+    double score = ui->lineEdit_score->text().toDouble();
+
+    if(id == ""){
+        QMessageBox::critical(this,"失败","请输入学号",QMessageBox::Ok);
+        return;
+    }else if(name == ""){
+        QMessageBox::critical(this,"失败","请输入姓名",QMessageBox::Ok);
+        return;
+    }else if(score < 0 || score > 100){
+        QMessageBox::critical(this,"失败","请输入正确的成绩",QMessageBox::Ok);
+        return;
+    }
+
+    QString s = QString("Insert into studentscore values('%1','%2',%3)").arg(id).arg(name).arg(score);
+
+    if(sq.exec(s) == false){
+        QMessageBox::critical(this,"失败","插入数据失败",QMessageBox::Ok);
+        return;
+    }else{
+        QMessageBox::information(this,"成功","插入数据成功",QMessageBox::Ok);
+    }
+
+    showTable();
 }
+

@@ -20,8 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
     QMovie *movie = new QMovie("C:/Users/86136/Desktop/Qttest/untitled/loading.gif");
     ui->giflabel->setMovie(movie);
     movie->start();
-    t = new TableShow();
-    t->setWindowTitle("学生成绩表");
 }
 
 MainWindow::~MainWindow()
@@ -51,6 +49,8 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_showButton_clicked()
 {
+    t = new TableShow();
+    t->setWindowTitle("学生成绩表");
     t->show();
 }
 
